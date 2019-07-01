@@ -151,7 +151,7 @@
 15. `label`标签
 
     ```html
-    <label for="pwd"> 默认密码输入框获取焦点
+    <label for="pwd"> <!--默认密码输入框获取焦点-->
     	账号：<input type="text" />
         密码：<input type="password" id="pwd"/>
     </label>
@@ -169,8 +169,8 @@
 
     ```html
     <select>
-        <option>北京</option>
-        <option selected="selected">深圳</option> 默认选中深圳
+        <option>北京</option> <!--默认选中深圳-->
+        <option selected="selected">深圳</option> 
         <option>上海</option>
         <option>广州</option>
     </select>

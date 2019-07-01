@@ -3,6 +3,19 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Document</title>
+	<style>
+
+	body{
+		background-color: #00cccccc;
+	}
+    p:nth-child(2n) { /*第2、4、6个孩子变蓝色*/
+        color:blue;
+    }
+    p:first-child {
+        color:#ff00;
+    }
+
+</style>
 </head>
 <body>
 	<fieldset>
@@ -10,8 +23,19 @@
     用户名：<input type="text"/> <br />
     密　码：<input type="password"/>
 </fieldset>
-<iframe src="//player.bilibili.com/player.html?aid=15241731&cid=24807919&page=65" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
 
 <iframe height=498 width=510 src='http://player.youku.com/embed/XNDIyMTI1Njc0NA==' frameborder=0 'allowfullscreen'></iframe>
+<br />
+
+<div>
+    <p>第1个孩子</p>
+    <p>第2个孩子</p>
+    <div>第3个孩子</div>
+    <div>第4个孩子</div>
+    <div>第5个孩子</div>
+    <div>第6个孩子</div>
+    <div>第7个孩子</div>
+</div>
+
 </body>
 </html>

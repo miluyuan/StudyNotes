@@ -56,8 +56,6 @@
    }
    ```
 
-   
-
 10. `:`伪类选择器 - 链接伪类选择器
 
     - **:link**，未访问的链接
@@ -68,7 +66,7 @@
 
     - **:active**，选定的链接，点击鼠标不松开时
 
-    - 注意书写顺序，须按lvha顺序书写
+    - 注意**书写顺序**，须按lvha顺序书写
 
       ```html
       <style>
@@ -143,13 +141,15 @@
 
     * **color**
       1. `color: red;`
-      2. `color: #FF00FF00;`
+      2. `color: #00FF00;`，没有透明度
       3. `color: rgb(203,23,223);`
-      4. `color: rgba(0,0,0,0.5);`，a的取值范围0~1
+      4. `color: rgba(0,0,0,0.5);`，a为透明度，取值范围0~1
     * **text-align**，水平对齐方式
+      
       * `text-align: center`;
       * 值有left、center、right等
-    * **line-height**，行距
+    * **line-height**，行高
+      
       * `line-height: 22px;`
       * 一般行距比字号大7~8像素即可
     * **text-indent**，首行缩进
@@ -163,8 +163,18 @@
       * 对中文无效
     * **text-shadow**，文字阴影
       * `text-shadow: 5px 11px 3px rgba(0,0,0,0.5) `
+      
       * `text-shadow: 水平位置(必填) 垂直位置(必填) 模糊距离(选填) 阴影颜色(选填)`
+      
       * 英文：`text-shadow: h-shadow v-shadow blur color`
+      
+      * 多套阴影用逗号隔开
+      
+        ```css
+        text-shadow: 5px 11px 3px rgba(0,0,0,0.5),-5px 11px -3px rgba(0,0,0,0.5);
+        ```
+      
+        
 
 14. sublime快捷键，xxx+tab
 
