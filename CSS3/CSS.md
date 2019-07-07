@@ -56,6 +56,8 @@
    }
    ```
 
+   
+
 10. `:`伪类选择器 - 链接伪类选择器
 
     - **:link**，未访问的链接
@@ -66,7 +68,7 @@
 
     - **:active**，选定的链接，点击鼠标不松开时
 
-    - 注意**书写顺序**，须按lvha顺序书写
+    - 注意书写顺序，须按lvha顺序书写
 
       ```html
       <style>
@@ -141,15 +143,13 @@
 
     * **color**
       1. `color: red;`
-      2. `color: #00FF00;`，没有透明度
+      2. `color: #FF00FF00;`
       3. `color: rgb(203,23,223);`
-      4. `color: rgba(0,0,0,0.5);`，a为透明度，取值范围0~1
+      4. `color: rgba(0,0,0,0.5);`，a的取值范围0~1
     * **text-align**，水平对齐方式
-      
       * `text-align: center`;
       * 值有left、center、right等
-    * **line-height**，行高
-      
+    * **line-height**，行距
       * `line-height: 22px;`
       * 一般行距比字号大7~8像素即可
     * **text-indent**，首行缩进
@@ -163,18 +163,8 @@
       * 对中文无效
     * **text-shadow**，文字阴影
       * `text-shadow: 5px 11px 3px rgba(0,0,0,0.5) `
-      
       * `text-shadow: 水平位置(必填) 垂直位置(必填) 模糊距离(选填) 阴影颜色(选填)`
-      
       * 英文：`text-shadow: h-shadow v-shadow blur color`
-      
-      * 多套阴影用逗号隔开
-      
-        ```css
-        text-shadow: 5px 11px 3px rgba(0,0,0,0.5),-5px 11px -3px rgba(0,0,0,0.5);
-        ```
-      
-        
 
 14. sublime快捷键，xxx+tab
 
@@ -319,7 +309,7 @@
     }
     ```
 
-23. 背景简写，颜色》图片》平铺》滚动》位置
+23. 背景简写，`颜色>图片>平铺>滚动>位置`
 
     ```css
     background: #f00 url(liu.jpg) repeat fixed 10px bottom;
@@ -338,4 +328,85 @@
 
     
 
-25. 
+25. CSS权重表
+
+    |名称						|权重     |
+    | ------------------------ | -------- |
+    | 继承或者* 的贡献值       | 0,0,0,0  |
+    | 每个元素（标签）贡献值为 | 0,0,0,1  |
+    | 每个类，伪类贡献值为     | 0,0,1,0  |
+    | 每个ID贡献值为           | 0,1,0,0  |
+    | 每个行内样式贡献值       | 1,0,0,0  |
+    | 每个!important贡献值     | ∞ 无穷大 |
+
+26. 盒子模型（Box Model）
+
+    * 盒子边框（Box Border）
+
+      ```css
+      border-width: 3px;
+      border-style: none/solid/dashed/dotted/double;
+      border-color: pink;
+      border-top-color: red;
+      /*简写*/
+      border: width style color;
+      border-top: 1px solid red;
+      ```
+
+    * 合并表格线
+
+      ```css
+      table {
+          border-collapse: collapse;/*表格边框与单元格边框合并*/
+      }
+      ```
+
+      
+
+    * 圆角边框**border-radius**
+
+      ```css
+      border-radius: 左上 右上 右下 左下;
+      border-radius: 左上右下 右上左下;
+      border-radius: 左上 右上左下 右下;
+      /*规律：参数不够时取对角的值*/
+      ```
+
+      
+
+    * 内边距**padding**
+
+      ```css
+      /*综合设置*/
+      padding: 上 右 下 左;
+      padding: 上 右左 下;
+      padding: 上下 左右;
+      /*分别设置*/
+      padding-top/right/bottom/left: 15px;
+      ```
+
+      
+
+    * 外边距**margin**
+
+      * 用法同padding
+
+      * 实现盒子水平居中`auto`
+
+        ```css
+        margin: 0 auto;
+        ```
+
+        
+
+    * 父子盒子外边距合并问题解决
+
+      1. 给父元素定义一个1px的border或padding
+      2. 给父元素添加`overflow:hidden;`
+
+    * **如果一个盒子没有给定宽度/高度或者继承父亲的宽度/高度，则padding 不会影响本盒子大小**
+
+    
+
+27. 
+
