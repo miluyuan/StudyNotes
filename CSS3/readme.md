@@ -215,10 +215,14 @@
     > display: inline; 转为行内元素
     >
     > display: inline-block; 转为行内块元素
+    >
+    > display: none;  隐藏元素，不保留位置（类似Android的View.GONE）
+    >
+    > visibility: hidden/visible; 隐藏/显示元素，保留位置（类似Android的View.VISIBLE）
 
 20. 复合选择器
 
-    * 交集选择器`div.c1`
+    * 交集选择器`div.c1`，表示类名为`c1`的`div`
 
     * 并集选择器`div,p`，用逗号隔开，书写规范为每个逗号占一行
 
@@ -315,7 +319,7 @@
     background: #f00 url(liu.jpg) repeat fixed 10px bottom;
     ```
 
-24. 设置一行文字水平垂直居中
+24. 设置一行**文字水平垂直居中**
 
     ```css
     a {
@@ -328,4 +332,278 @@
 
     
 
-25. 
+25. 定位属性`position`
+
+    ```css
+    position: absolute; /*static，relative，absolute，fixed */
+    ```
+
+    - **static**：默认，
+
+    - **relative**：相对定位，不脱标，占有位置
+
+      ```css
+      position: relative;
+      left: 100px; /*相对于自己往右偏移100px，但原来的位置还是占着*/
+      ```
+
+    - **absolute**：绝对位置，完全脱标，不占有位置，飘在其他标签上方
+
+      ```css
+      position: absolute; 
+      left: 100px; /*如果父元素没有定位，则孩子以浏览器准对齐*/
+      ```
+
+      > 如果父元素没有定位，则孩子以浏览器准对齐；
+
+      > 如果父元素有定位（如relative，absolute），则孩子以最近的父元素为基准对齐，且不受父元素padding影响。
+
+      > 一般用法：子绝父相，孩子绝对定位，父亲相对定位。
+
+      孩子居中的方法：
+
+      ```css
+      left: 50%;
+      margin-left: -(孩子宽度/2)px;
+      /*设置了绝对定位后原来通过magin设置居中的方法无效了，margin: 0px auto;*/
+      ```
+
+      
+
+    - **fixed**：固定定位，不受父元素影响，只认浏览器；完全脱标，不占位置，不随滚动条滚动。
+
+      > 固定定位的盒子一定要写宽高，除非有内容撑开不用写。
+
+    - 另外，position的绝对和固定定位与float都会使元素变为行内块元素
+
+26. **z-index**：设置堆叠顺序
+
+    ```css
+    position: absolute;
+    z-index: 1; /*默认0，没有单位*/
+    ```
+
+    
+
+27. **overflow**：溢出，设置内容超过指定宽高时的显示
+
+    - visible：默认，没有滚动条，会溢出；
+    - auto：超出显示滚动条，不超出不显示滚动条，不会溢出；
+    - hidden：超出部分不显示，没有滚动条，不会溢出；
+    - scroll：总是显示滚动条，不会溢出；
+
+28. **box-shadow**：盒子阴影
+
+    `box-shadow:  水平阴影 垂直阴影 模糊距离 阴影尺寸 阴影颜色 内/外阴影;`
+
+    ```css
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    ```
+
+    - h-shadow: 必填，水平阴影位置，允许负值；
+    - v-shadow: 必填，垂直阴影位置
+    - blur: 可选，模糊距离
+    - spread: 阴影尺寸
+    - color: 阴影颜色
+    - inset:  将外部阴影（outset）改为内部阴影
+
+29. 
+
+## CSS高级功能
+
+##### cursor鼠标样式
+
+```css
+cursor: default; 箭头
+cursor: pointer; 小手
+cursor: move; 移动
+cursor: text; 文本
+```
+
+##### outline轮廓线
+
+```css
+outline: 0; 取消轮廓线，如取消input的轮廓线，0或none效果一样；
+outline: 1px solid red; 在border的外面是outline，与border不冲突。
+border: 1px solid blue;
+```
+
+##### 取消文本域textarea可拖拽
+
+```css
+resize: none;
+```
+
+##### vertical-align控制行内块元素和文本对齐方式
+
+通常用来控制图片和表单与文字的对齐。
+
+```css
+vertical-align: baseline(默认) | top | middle | bottom;
+```
+
+```css
+textarea {
+    vertical-align: middle;
+}
+<div>
+	姓名：<textarea></textarea>
+</div>
+```
+
+##### 去除图片底侧空白缝隙
+
+记住：图片、表单等行内块元素的底线会和父级盒子的基线对齐，造成图片底侧有空白缝隙；
+
+解决方法：
+
+ - 把行内块元素转为块元素
+
+   ```css
+   img {
+       display: block;
+   }
+   ```
+
+ - 不和基线对齐，改为top对齐
+
+   ```css
+   img {
+       vertical-align: middle|top; 一般用top
+   }
+   ```
+
+##### 文本换行规则设置
+
+- **word-break**：英文单词自动换行规则
+
+  ```css
+  word-break: normal | break-all | keep-all; 
+  /*
+  normal和keep-all换行需保持单词完整，只能在半角空格或连字符处换行；
+  break-all可在任意字母位置换行
+  */
+  ```
+
+  
+
+- **white-space**：
+
+  ```css
+  white-space: normal; 默认，显示不玩自动换行
+  white-space: nowrap; 强制同一行内显示所有文本，直到遇到br等换行元素
+  ```
+
+- **text-overflow**，一行文字溢出处理，需与white-space和overflow一起用才有效
+
+  ```css
+  white-space: nowrap; 	强制行内显示
+  overflow: hidden;		超出部分不显示	
+  text-overflow: clip;	不带省略号
+  text-overflow: ellipsis; 带省略号
+  ```
+
+##### 精灵图(Sprite)
+
+```css
+span {
+    width: 20px;
+    height: 20px;
+    background: url(image/abcd.jpg) no-repeat;
+    background-position: 0 -388px;
+}
+```
+
+##### 图标字体
+
+使用步骤：
+
+ 1. 声明字体
+
+ 2. 引用字体
+
+    ```css
+    span {
+        font-family: "字体库名"; 
+    }
+    ```
+
+ 3. 在布局中写入图标字体
+
+    ```css
+    <span>  </span> /*图标字体是不可见*/
+    或者
+    span::before{
+        content: "\e900";
+    }
+    ```
+
+http://icomoon.io
+
+http://www.iconfont.cn
+
+
+
+##### 滑动门
+
+```html
+<!--a负责左侧背景，span负责右侧背景，不能给宽度，用padding-->
+<style>
+    a {
+        display: inline-block;
+        height: 33px;
+        background: url(images/ao.png) no-repeat;
+        padding-left: 15px;
+    }
+    a span {
+        display: inline-block;
+        height: 33px;
+        background: url(images/ao.png) no-repeat right; 背景图右对齐
+        padding-right: 15px;
+    }
+</style>
+<li>
+	<a href="#">
+    	<span>导航栏</span>
+    </a>
+</li>
+```
+
+
+
+##### 将padding和border都计入width/height里面
+
+```css
+box-sizing: border-box; 
+```
+
+
+
+##### 过渡动画
+
+```css
+/*实现鼠标移到div上变宽动画*/
+div {
+    width: 200px;
+    height: 100px;
+    background: pink;
+    /*transition不能写在div:hover里面*/
+    /*transition: 要过渡的属性  耗时  运动曲线  延迟多久开始 */
+    transition: width 0.3s ease-in 0s;
+    /*运动曲线：linear|ease(默认)|ease-in|ease-out|ease-in-out
+    		    匀速 |逐渐慢下来 | 加速  |  减速   |先加速后减速 */
+    /*先宽度动画后高度动画*/
+    transition: width 0.3s ease-in 0s, height 0.6 ease 0s;
+    /*实现宽度和高度同时动画*/
+    transition: all 0.6s;
+}
+div:hover {
+    width: 600px;
+    height: 300px;
+}
+```
+
+
+
+## 2D变形 transform
+
