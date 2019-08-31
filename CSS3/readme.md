@@ -216,6 +216,8 @@
     >
     > display: inline-block; 转为行内块元素
     >
+    > display: flex; 伸缩布局，按比例分空间，子元素flex:1;
+    >
     > display: none;  隐藏元素，不保留位置（类似Android的View.GONE）
     >
     > visibility: hidden/visible; 隐藏/显示元素，保留位置（类似Android的View.VISIBLE）
@@ -364,7 +366,7 @@
 
       ```css
       left: 50%;
-      margin-left: -(孩子宽度/2)px;
+      margin-left: -(自己宽度/2)px; /*或者 transform: translate(-50%); */
       /*设置了绝对定位后原来通过magin设置居中的方法无效了，margin: 0px auto;*/
       ```
 
@@ -594,7 +596,7 @@ div {
     		    匀速 |逐渐慢下来 | 加速  |  减速   |先加速后减速 */
     /*先宽度动画后高度动画*/
     transition: width 0.3s ease-in 0s, height 0.6 ease 0s;
-    /*实现宽度和高度同时动画*/
+    /*所有变化都实现0.6s的动画，如宽度和高度同时动画*/
     transition: all 0.6s;
 }
 div:hover {
@@ -605,5 +607,191 @@ div:hover {
 
 
 
-## 2D变形 transform
+## 变形 transform
+
+- **平移translate**
+
+  ```css
+  transform: translate(50px, 50px); 移动X,Y
+  transform: translate(50px);	 移动X
+  transform: translate(50%);	移动X，移动自己宽度的一半，与父级无关
+  transform: translate(0, 50px); 移动Y
+  transform: translateX(50px);  移动X
+  transform: translateY(50px);   移动Y
+  transform: translateZ(100px);只能是px不能是百分比，正值放大效果，要与perspective配合使用
+  transform: translate3d(0, 30px, 0);  合写，分别代表x,y,z轴
+  ```
+
+  
+
+- **缩放scale**
+
+  ```css
+  transform: scale(2); 宽高放大到原来的2倍
+  transform: scale(0.5, 2); 宽缩小，高放大
+  ```
+
+  
+
+- **旋转rotate(deg)**
+
+  ```css
+  transform: rotate(90deg);  顺时针旋转90度
+  transform: rotateZ(90deg); 顺时针旋转90度
+  transform: rotateX(180deg);  沿X轴旋转
+  transform: rotateY(360deg);  沿Y轴旋转
+  ```
+
+  
+
+- **指定基准点旋转transform-origin**
+
+  ```css
+  transform: rotate(90deg);
+  transform-origin: left top;  以左上角为基准点旋转，还有right bottom
+  transform-origin: 10px 10px;  以指定的点旋转
+  ```
+
+  
+
+- **倾斜skew(deg,deg)**
+
+  ```css
+  transform: skew(-10deg, 0);  往右倾斜
+  ```
+
+  
+
+- **视距效果perspective**
+
+  写在父元素里
+
+  ```css
+  body {
+      perspective: 1000px;    值越小效果越明显，默认0；
+  }
+  ```
+
+  
+
+- **背面可见性backface-visibility**
+
+  ```css
+  backface-visibility: hidden;  当元素旋转到背面时变为不可见。
+  ```
+
+  
+
+- **动画animation**
+
+  ```css
+  animation: 动画名称 动画时间 运动曲线 何时开始 播放次数 是否反方向
+  /*例子*/
+  div {
+      animation: go 2s ease 0s infinite alternate;
+  }
+  /*定义动画*/
+  @keyframes go {
+      from {
+          transform: translateX(0);
+      }
+      to {
+          transform: translateX(200px) rotateY(30deg); 多组动画用空格隔开
+      }
+  }
+  ```
+
+  
+
+- 
+
+## 三等份布局
+
+```css
+section {
+    display: flex; 1.父盒子设置伸缩布局
+    flex-direction: row; 2. 指定水平(row)等分/垂直(column)等分,默认row
+    min-width: 100px;  可限制最大最小宽高
+    max-width: 600px; 
+}
+/*设置第一个div与第二个div的宽度比例为1：2*/
+section div: nth-child(1) {
+    flex: 1;
+}
+section div: nth-child(2) {
+    flex: 2;
+}
+```
+
+1. 水平排列方式**justify-content**:
+
+   ```css
+   display: flex;
+   justify-content: flex-start; 默认，让子元素靠左对齐
+   justify-content: flex-end;   让子元素靠右对齐
+   justify-centent: center;	让子元素居中对齐
+   justify-content: space-between; 左右的子元素贴近父容器，中间的平均分布空白间距
+   justify-content: space-around;  每个子元素均分空白间隙
+   ```
+
+2.  垂直排列方式**align-content**:
+
+   用法同justify-content；
+
+   起作用的条件：
+
+    ```css
+   display: flex;
+   flex-direction: row;  横向排列
+   flex-wrap: wrap;   换行
+    ```
+
+   
+
+3.  单行在容器中的垂直位置**align-items**:
+
+   ```css
+   align-items: stretch;
+   align-items: center;
+   align-items: flex-start;
+   align-items: flex-end;
+   ```
+
+   
+
+4. 显示不下是否拆行**flex-wrap**：
+
+   ```css
+   flex-wrap: nowrap; 默认，不换行，显示不下则压缩显示
+   flex-wrap: wrap;  显示不下时换行
+   flex-wrap: wrap-reverse; 将wrap按x轴翻转
+   ```
+
+   
+
+5. 简写**flex-flow: flex-drection flex-wrap;**
+
+   ```css
+   flex-flow: row wrap;
+   ```
+
+6. 控制子元素的排列顺序**order**
+
+   ```css
+   /*让第二个盒子排在第一个前面*/
+   div:nth-child(1) {
+       order: 1;
+   }
+   div:nth-child(2) {
+       order: -1;
+   }
+   ```
+
+   
+
+7. 
+
+
+
+​	
 
