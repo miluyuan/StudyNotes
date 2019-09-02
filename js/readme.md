@@ -1,7 +1,5 @@
 ## 语法
 
-#### 
-
 #### 数据类型
 
 > 数值Number、字符串String 、布尔Boolean、undefined、null、Object；
@@ -107,7 +105,7 @@ var arr = [2,3,4,5,6,2];
 arr.length;
 arr.push(9); //末端添加元素
 arr.pop();  //删除末端元素
-var arrSlice = arr.slick(2,4); //截取arr中的元素，不包括4，arr不变
+var arrSlice = arr.slice(2,4); //截取arr中的元素，不包括4，arr不变
 var arr2 = ['7','8','9'];
 var arrConcat = arr.concat(arr2); //合并数组返回新数组，原数组不变
 var s = arr.join(); //返回以逗号隔开的字符串，如“2,3,4”
@@ -167,7 +165,9 @@ var input = document.querySelector('input');
 input.onfocus //获得焦点
 input.onblur //失去焦点
 input.onmouseover //鼠标经过
+div.onmouseenter  //鼠标经过，不会冒泡，即移到子元素不会触发父元素
 input.onmouseout  //鼠标移开
+div.onmouseleave  //鼠标移开，不会冒泡
 ```
 
 
@@ -285,7 +285,7 @@ div.getAttribute('data-list-name')
 var ul = document.querySelector('ul');
 var li = document.createElement('li');//创建节点
 ul.appendChild(li); //添加节点
-ul.insertBefore(li, ul.children[0]); //指定加入位置，最前面添加节点li
+ul.insertBefore(li, ul.children[0]); //指定加入位置，在前面添加节点li
 ```
 
 #### 4. 删除节点
@@ -468,7 +468,6 @@ div.onclick = function(event) {//event即事件对象
 
   
 
-- 
 
 #### 6. 常用键盘事件
 
@@ -491,5 +490,231 @@ div.onclick = function(event) {//event即事件对象
 
   
 
+
+
+
+
+
+## BOM（Browser Object Model）
+
+#### 1. 页面加载事件
+
+> window.onload，在界面完全加载完成（图像、脚本、css等）后调用；包括刷新、前进、后退都会调用
+
+```js
+window.onload = function() {}
+或
+window.addEventListener('load', function() {})
+//页面显示监听，基本和onload一样；区别是load是重新加载，如果是已缓存好的页面则不会调load
+window.onpageshow = function(e) {
+    if(e.persisted) {// true，从缓存中加载的
+        
+    }
+}  
+```
+
+> DOMContentLoaded,仅当DOM加载完成时调用，不用等css，图片，flash加载完成。
+
+```js
+window.addEventListener('DOMContentLoaded', function() {})
+```
+
+
+
+#### 2. 窗口大小调整事件
+
+> window.onresize,
+
+```js
+//window可以省略
+window.addEventListener('resize', function(){
+    //窗口宽度小于800隐藏元素
+    if(window.innerWidth <= 800){
+        div.style.display = 'none';
+    } else {
+        div.style.display = 'block';
+    }
+})
+```
+
+
+
+#### 3. 定时器
+
+> window.setTimeout(调用函数， [延迟的毫秒值]);
+>
+> 只调用一次
+
+```js
+setTimeout(function(){}, 2000);
+//或传方法名
+var fn = function(){}
+setTimeout(fn, 2000);
+//或传字符串
+setTimeout('fn()', 2000);
+//给定时器取名
+var timeout = setTimeout(fn, 2000);
+```
+
+> window.clearTimeout(定时器名字)
+
+```js
+var timeout = setTimeout(function(){}, 2000);
+clearTimeout(timeout);
+```
+
+> window.setInterval(调用函数， [延迟的毫秒值]);
+>
+> 重复调用，每隔指定时间调用，用法同setTimeout
+
+> window.clearInterval(定时器名字)；
+
+
+
+#### 4. 事件循环（event loop）
+
+
+
+#### 5. location对象
+
+- location的属性
+
+  > window.location
+  >
+  > location.href   http://www.itcast.cn/index.html?name=andy&age=18#link
+  >
+  > location.host   www.itcast.cn
+  >
+  > location.port
+  >
+  > location.pathname    "index.html"
+  >
+  > location.search     "?name=andy&age=18"
+  >
+  > location.hash        "#link"
+  >
+  > 给location.href赋值会自动跳转到赋值的网址
+
+- location的方法
+
+  > location.assign('www.itcast.cn');   会记录浏览历史，可以实现后退功能
+  >
+  > location.replace('www.itcast.cn');  不会记录浏览历史，不可以实现后退功能
+  >
+  > location.reload();   刷新
+  >
+  > location.reload(true);  强制刷新
+
 - 
+
+
+
+#### 6. navigator对象
+
+> 判断浏览器是手机还是pc
+
+
+
+#### 7. history对象
+
+> history.back();  后台，history.go(1);
+>
+> history.forward(); 前进, history.go(-1);
+>
+> history.go(n);  前进或后退页数
+
+#### 8. 物理像素比
+
+window.devicePixelRatio
+
+
+
+## 元素偏移量offset
+
+#### 常用属性
+
+> 属性值不带单位，值受父级是否有定位影响，是只读属性，只能获取值不能设值
+>
+> element.offsetParent       返回带有定位的父级元素，如果没有则返回body
+>
+> element.offsetTop        与上侧的距离
+>
+> element.offsetLeft
+>
+> element.offsetWidth   包括padding、border
+>
+> element.offsetHeight
+
+#### offset与style区别
+
+1. offset只读，不能设置
+2. offset获取的是数值，style得到的是带单位字符串“200px”
+3. style只能得到的是行内样式里设置的值
+4. style.width 不包括padding和border
+5. 所以，获取值用offset，设置值用style
+
+
+
+## 元素可视区client
+
+> 属性值不带单位
+>
+> element.clientTop   返回border-top
+>
+> element.clientLeft   返回border-left
+>
+> element.clientWidth  包括padding，不包括border
+>
+> element.clientHeight   
+
+##### 立即执行函数
+
+> 两种写法：
+>
+> (function(){})();
+>
+> 或
+>
+> (function(){}())
+
+
+
+## 元素滚动scroll
+
+#### 元素内容滚动
+
+> 与滚动条有关，不带单位
+>
+> element.scrollTop    返回被卷去的上侧距离，不带单位
+>
+> element.scrollLeft 
+>
+> element.scrollWidth   返回内容的实际宽度，不含边框，最小值是element.clientWidth
+>
+> element.scrollHeight
+
+#### 页面滚动
+
+针对的是页面的滚动条
+
+> window.pageYOffset   头部被卷去的距离 
+>
+> window.pageXOffset   
+
+#### 滚动事件
+
+```js
+div.addEventListener('scroll', function() {
+    console.log(div.scrollTop);
+})
+```
+
+## offset、client、scroll区别
+
+1. offset用于获取元素位置，offsetTop，offsetLeft
+2. client用于获取元素大小，clientWidth，clientHeight
+3. scroll用于获取滚动距离，scrollTop，scrollLeft
+4. 页面滚动距离用window.pageYOffset，pageXOffset
+
+
 
