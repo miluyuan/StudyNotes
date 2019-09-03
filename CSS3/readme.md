@@ -365,7 +365,7 @@
       孩子居中的方法：
 
       ```css
-      left: 50%;
+      left: 50%;  /*父盒子的一半*/
       margin-left: -(自己宽度/2)px; /*或者 transform: translate(-50%); */
       /*设置了绝对定位后原来通过magin设置居中的方法无效了，margin: 0px auto;*/
       ```
@@ -789,7 +789,16 @@ section div: nth-child(2) {
 
    
 
-7. 
+7. 去除li的点
+```css
+	* {
+		margin:0;
+		padding:0;
+	}
+	li {
+		list-style: none;
+	}
+```
 
 
 

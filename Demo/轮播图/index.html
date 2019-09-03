@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>轮播图</title>
+	<style type="text/css">
+		* {
+			margin: 0;
+			padding: 0
+		}
+
+		ul li {
+			list-style: none;
+			float: left;
+		}
+
+		#container {
+			margin: 100px auto;
+			background-color: pink;
+			width: 640px;
+			height: 400px;
+			border: 1px solid blue;
+			position: relative;
+		}
+
+		#img_container {
+			width: 500%;
+			position: absolute;
+		}
+
+		#img_container img {
+			width: 640px;
+			height: 400px;
+		}
+
+		.btn_l,
+		.btn_r {
+			position: absolute;
+			top: 50%;
+			transform: translateY(-50%);
+		}
+
+		.btn_l {
+			left: 0;
+		}
+
+		.btn_r {
+			right: 0;
+		}
+
+	</style>
+</head>
+<body>
+<div id="container">
+	<ul id="img_container">
+		<li><img src="image/1.jpg"></li>
+		<li><img src="image/2.jpg"></li>
+		<li><img src="image/3.jpg"></li>
+		<li><img src="image/4.jpg"></li>
+		<li><img src="image/5.jpg"></li>
+	</ul>
+	<ul id="dot_container">
+	</ul>
+	<button class="btn_l">左</button>
+	<button class="btn_r">右</button>
+</div>
+</body>
+<script>
+	var left = document.querySelector('.btn_l');
+	var right = document.querySelector('.btn_r');
+	var imgUl = document.querySelector('#img_container');
+	left.addEventListener('click', function () {
+		// imgUl.style.left = imgUl.offsetLeft + 640 + 'px';
+		animate(imgUl, 640);
+	});
+
+	right.addEventListener('click', function () {
+		// imgUl.style.left = imgUl.offsetLeft - 640 + 'px';
+		animate(imgUl, -640);
+	});
+
+	function animate(target, movePx) {
+		var count = 0;
+		var movePositive = Math.abs(movePx);
+		var positive = movePx / movePositive;
+		var interval = setInterval(function () {
+			if (count >= movePositive) {
+				clearInterval(interval)
+			} else {
+				target.style.left = imgUl.offsetLeft + positive * 10 + 'px';
+				count += 10;
+			}
+		}, 16)
+	}
+</script>
+</html>

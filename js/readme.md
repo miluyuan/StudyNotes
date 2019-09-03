@@ -1,3 +1,5 @@
+[TOC]
+
 ## 语法
 
 #### 数据类型
@@ -154,7 +156,7 @@ document.documentElement //返回html元素
 
 
 
-## 事件
+## 事件监听
 
 ```js
 var btn = document.getElementById('btn');
@@ -165,8 +167,8 @@ var input = document.querySelector('input');
 input.onfocus //获得焦点
 input.onblur //失去焦点
 input.onmouseover //鼠标经过
-div.onmouseenter  //鼠标经过，不会冒泡，即移到子元素不会触发父元素
 input.onmouseout  //鼠标移开
+div.onmouseenter  //鼠标经过，不会冒泡，即移到子元素不会触发父元素
 div.onmouseleave  //鼠标移开，不会冒泡
 ```
 
@@ -208,7 +210,7 @@ var div = document.querySelector("div");
 div.style.backgroundColor = 'pink'; //注意属性名称都变为驼峰命名了
 div.style.width = '200px';
 //element.className 修改类名，会覆盖之前类名
-div.style.className = 'change';
+div.className = 'change';
 ```
 
 #### 获取属性值的两种方式
@@ -248,7 +250,7 @@ div.getAttribute('data-list-name')
 	- 属性节点 nodeType=2
 	- 文本节点 nodeType=3 （空格、换行等）
 
-#### 2. 获取节点
+##### 2. 获取节点
 
 - 获取父节点
 
@@ -277,9 +279,10 @@ div.getAttribute('data-list-name')
   div.previousElementSibling
   ```
 
-- 
+  
 
-#### 3. 创建节点
+
+#####  3. 创建节点
 
 ```js
 var ul = document.querySelector('ul');
@@ -288,7 +291,7 @@ ul.appendChild(li); //添加节点
 ul.insertBefore(li, ul.children[0]); //指定加入位置，在前面添加节点li
 ```
 
-#### 4. 删除节点
+#####  4. 删除节点
 
 ```js
 var ul = document.querySelector('ul');
@@ -301,7 +304,7 @@ ul.removeChild(ul.children[0]); //删除指定元素
 <a href="javascript:;"></a>
 ```
 
-#### 5. 复制节点
+#####  5. 复制节点
 
 ```js
 var ul = document.querySelector('ul');
@@ -311,7 +314,7 @@ var clone = ul.children[0].cloneNode();
 var clone = ul.children[0].cloneNode(true);
 ```
 
-#### 6. 三种创建元素方式的区别
+#####  6. 三种创建元素方式的区别
 
 - document.write()
 
@@ -397,7 +400,7 @@ div.onclick = function(event) {//event即事件对象
   ```js
   e.target //点击的那个元素
   e.type   //事件类型，如click、mouseover、mouseout，不带on
-  e.preventDefault(); //方法，阻止默认事件
+  e.preventDefault(); //方法，阻止默认事件,如链接跳转
   e.stopPropagation(); //阻止冒泡，事件不会传给父元素
   
   
@@ -605,7 +608,8 @@ clearTimeout(timeout);
   >
   > location.reload(true);  强制刷新
 
-- 
+  
+
 
 
 
@@ -626,6 +630,8 @@ clearTimeout(timeout);
 #### 8. 物理像素比
 
 window.devicePixelRatio
+
+> pc端一般是1，手机端如Iphone6s是2
 
 
 
@@ -656,6 +662,8 @@ window.devicePixelRatio
 
 
 ## 元素可视区client
+
+##### 常用属性
 
 > 属性值不带单位
 >
@@ -697,9 +705,17 @@ window.devicePixelRatio
 
 针对的是页面的滚动条
 
+> 不带单位，获取值，不能赋值
+>
 > window.pageYOffset   头部被卷去的距离 
 >
 > window.pageXOffset   
+
+> 不带单位，赋值，窗口滚动
+>
+> window.scroll(x, y); 
+>
+> window.scroll(0, 100); //滚动到100px位置
 
 #### 滚动事件
 
@@ -718,3 +734,151 @@ div.addEventListener('scroll', function() {
 
 
 
+##　移动端
+
+#### 触摸事件
+
+```js
+// touchstart、touchmove、touchend
+div.addEventListener('touchstart', function(e){
+    //e:TouchEvent对象
+    e.touches //获取屏幕上手指列表
+    e.targetTouches //获取当前元素上手指的列表，常用
+    e.changedTouches //手指状态发生改变的列表，离开的手指列表或增加的手指列表
+     //获取第一个手指的信息，Touch对象
+    e.targetTouches[0]
+})
+```
+
+#### Touch对象
+
+```js
+var touch = e.targetTouches[0];
+touch.clienX
+touch.clienY
+touch.pageX
+touch.pageY
+touch.screenX
+touch.screeY
+touch.target //被触摸的元素
+```
+
+#### 利用CSS3的过渡动画
+
+```js
+var index = 0;
+var timer = setInterval(function(){
+    index++;
+    var translatex = -index * w;
+    //实现轮播图移动动画
+    ul.style.transition = 'all .3s';
+    ul.style.transform = 'translateX(' + translatex + 'px)';
+}, 2000);
+//监听过度动画完成事件transitionend
+ul.addEventListener('transitionend', function() {
+    
+})
+
+```
+
+#### 获取类名数组classList
+
+```js
+div.classList //返回DOMTokenList
+var cls = div.classList[0] //获取第一个类名,返回字符串
+```
+
+- 添加类名
+
+  ```js
+  div.classList.add('three');//在后面追加类名
+  ```
+
+- 删除类名
+
+  ```js
+  div.classList.remove('three');
+  ```
+
+- 切换类名
+
+  ```js
+  div.classList.toggle('bg'); //当没有‘bg'这个类名时添加，已经有则删除
+  ```
+
+#### 移动端click事件会延迟300ms问题
+
+> 原因是移动端有个双击缩放功能，300ms延迟用于判断是否双击
+
+- 解决方法1
+
+  缺点是双击缩放没了
+
+  ```html
+  <meta name='viewport' content='user-scalable=no'>
+  ```
+
+  
+
+- 解决方法2
+
+  利用touch事件自己封装点击事件，缺点是繁琐
+
+- 解决方法3
+
+  使用[fastclick插件](https://github.com/ftlabs/fastclick)，插件就是js文件，直接引入即可
+
+#### 移动端插件
+
+- 触摸滑动插件[swiper](www.swiper.com.cn)、superslide、iscroll
+
+- 视频插件[zy.media.js]
+
+#### 移动开发框架
+
+- Bootstrap、Vue、jQuery
+- 
+
+
+
+## 本地存储
+
+> 存储在浏览器中
+>
+> 只能存字符串，通过JSON.stringify()转为字符串存储
+
+#### sessionStorage
+
+- 存约5M数据
+- 关闭浏览器数据消失
+- 同一窗口（页面）数据可以共享
+- 以键值对形式存数据
+
+```js
+window.sessionStorage.setItem(key, value);//设值， key是字符串
+sessionStorage.getItem(key);	//取值
+sessionStorage.removeItem(key); //删除数据
+sessionStorage.clear();  //删除所有
+```
+
+
+
+#### localStorage
+
+- 存约20M数据
+- 数据永久有效，关闭浏览器不会消失
+- 可以多窗口（页面）共享
+- 存储与sessionStorage相同
+
+```js
+localStorage.setItem(key, value);//设值， key是字符串
+localStorage.getItem(key);	//取值
+localStorage.removeItem(key); //删除数据
+localStorage.clear();  //删除所有
+```
+
+
+
+
+
+ 

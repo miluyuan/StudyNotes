@@ -10,6 +10,7 @@
 			border-style: solid dashed dashed;
 			border-color: #00f transparent transparent;
 		}
+
 		.anim {
 			width: 100px;
 			height: 100px;
@@ -19,28 +20,32 @@
 	</style>
 </head>
 <body>
-	<button>go</button>
-	<div class="angle"></div>
-	<div class="anim"></div>
+<button>go</button>
+<div class="angle"></div>
+<div class="anim"></div>
 
+<div ></div>
 
 </body>
 <script type="text/javascript">
 	var div = document.querySelector('.anim');
 	var btn = document.querySelector('button');
-	btn.onclick = function() {
+	btn.onclick = function () {
 		console.log('onClick')
 		setInterval(fn, 20);
 	}
 
-	var fn = function() {
-		console.log('anim'+div.offsetLeft);
-		if (div.offsetLeft >=300) {
+	var fn = function () {
+		console.log('anim' + div.offsetLeft);
+		if (div.offsetLeft >= 300) {
 			clearInterval()
 		}
-		div.style.left = div.offsetLeft + 1 +"px";
+		div.style.left = div.offsetLeft + 1 + "px";
 	}
 
+	div.addEventListener('click', function () {
+		console.dir(div);
+	})
 
 </script>
 </html>
