@@ -700,7 +700,11 @@ div:hover {
       }
   }
   ```
-
+- **tranform-style**
+	写在父盒子里，让父盒子里的子盒子以3d效果显示
+  	```css
+  	transform-style: preserve-3d;
+  	```
   
 
 - 
@@ -803,4 +807,7 @@ section div: nth-child(2) {
 
 
 ​	
+## 验证CSS有没有错误
+1. https://cssstats.com/
+2. http://validator.w3.org/
 
