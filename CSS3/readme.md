@@ -365,7 +365,7 @@
       孩子居中的方法：
 
       ```css
-      left: 50%;  /*父盒子的一半*/
+      left: 50%;
       margin-left: -(自己宽度/2)px; /*或者 transform: translate(-50%); */
       /*设置了绝对定位后原来通过magin设置居中的方法无效了，margin: 0px auto;*/
       ```
@@ -700,11 +700,7 @@ div:hover {
       }
   }
   ```
-- **tranform-style**
-	写在父盒子里，让父盒子里的子盒子以3d效果显示
-  	```css
-  	transform-style: preserve-3d;
-  	```
+
   
 
 - 
@@ -793,21 +789,9 @@ section div: nth-child(2) {
 
    
 
-7. 去除li的点
-```css
-	* {
-		margin:0;
-		padding:0;
-	}
-	li {
-		list-style: none;
-	}
-```
+7. 
 
 
 
 ​	
-## 验证CSS有没有错误
-1. https://cssstats.com/
-2. http://validator.w3.org/
 
